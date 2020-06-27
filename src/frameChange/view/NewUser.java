@@ -6,9 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,12 +34,12 @@ public class NewUser extends JPanel{
 
 	public PlainMail pm = new PlainMail();
 
+	public Member m;
+
 	public NewUser(ChangePanel win) {
 
-		setLayout(null);
-
 		this.win = win;
-		//this.setBackground(Color.BLACK);
+		setLayout(null);
 
 		//라벨
 		JLabel signup = new JLabel("회원가입");
@@ -179,7 +180,6 @@ public class NewUser extends JPanel{
 			public void keyPressed(KeyEvent e) {
 				if(KeyEvent.VK_ENTER == e.getKeyCode()) {
 
-
 					String id = "kheee";
 
 					//id
@@ -195,7 +195,6 @@ public class NewUser extends JPanel{
 
 			}
 		});
-
 
 		txtPwd2.addKeyListener(new KeyListener() {
 
@@ -231,7 +230,7 @@ public class NewUser extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if(txtID.equals(txtID.getText())) {
+				if(idTrue = false) {
 					JOptionPane.showMessageDialog(null, "이미 등록된 아이디입니다.");
 
 				} else {
@@ -291,38 +290,35 @@ public class NewUser extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 
 				if(idTrue == true) {
+
 					JOptionPane.showMessageDialog(null, "회원가입 성공");
+					
+					//회원정보 member.txt 파일에 저장
+					m = new Member();
+					m.setUserId(txtID.getText());
+					m.setUserPwd(txtPwd.getText());
+					m.setUserPwd2(txtPwd.getText());
+					m.setUserName(txtName.getText());
+					m.setUserBirth(txtBirth.getText());
+					m.setUserEmail(txtEmail.getText());
+					m.setUserEnumber(txtEnumber.getText());
+					m.setUserPhone(txtPhone.getText());
+
+					fileSave();
+					fileOpen();
+					
 					win.change("login");
 
-					try {
-						BufferedWriter bw = new BufferedWriter(new FileWriter("member.txt", true));
-						bw.write(txtID.getText() + "/");
-						bw.write(txtPwd.getText() + "/");
-						bw.write(txtPwd2.getText() + "/");
-						bw.write(txtName.getText() + "/");
-						bw.write(txtBirth.getText() + "/");
-						bw.write(txtEmail.getText() + "/");
-						bw.write(txtPhone.getText() + "\n");
-
-						//BufferedReader br = new BufferedReader(new FileReader("member.txt", true));
-						//br.read(txtID.setText() + "/" );
-
-						bw.flush();
-
-
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
 				} else {
+
 					JOptionPane.showMessageDialog(null, "회원가입 실패");
+
 				}
 
 			}
 		});
-
 	}
+
 
 	//패널변경, 마우스이벤트
 	//뒤로가기
@@ -389,5 +385,31 @@ public class NewUser extends JPanel{
 		}	
 	}
 
+	public void fileSave() {
+
+		try (ObjectOutputStream object = 
+				new ObjectOutputStream(
+						new FileOutputStream("member.txt"));) {
+
+			object.writeObject(m);
+			object.flush(); 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void fileOpen() {
+
+		try(ObjectInputStream objIn = new ObjectInputStream(new FileInputStream("member.txt"));) {
+
+			System.out.println(objIn.readObject());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+	}
 
 }
