@@ -25,6 +25,7 @@ import frameChange.cardGame.vo.Player;
 import frameChange.cardGame.vo.UserDeck;
 import frameChange.controller.ChangePanel;
 
+
 public class MiniPoker extends JPanel{
 	
 	private ChangePanel mf;
@@ -35,6 +36,13 @@ public class MiniPoker extends JPanel{
 	private JLabel myMoney; private JLabel panDon;
 	public JLabel comMoney;
 	
+	public JLabel getMyMoney() {
+		return myMoney;
+	}
+
+	public void setMyMoney(JLabel myMoney) {
+		this.myMoney = myMoney;
+	}
 	private JLabel myJocbo;
 	
 	public JLabel turnTimer;
@@ -56,7 +64,7 @@ public class MiniPoker extends JPanel{
 	private ComDeck cd = new ComDeck();
 	private TrunTimer tt = new TrunTimer();
 	
-	private JLabel start; public Image[] images = new Image[6]; public ImageIcon[] images2 = new ImageIcon[6];
+	public Image[] images = new Image[6]; public ImageIcon[] images2 = new ImageIcon[6];
 	
 	public static int myMoney1 = 500000;
 	public static int comMoney1 = 500000;
@@ -199,7 +207,7 @@ public class MiniPoker extends JPanel{
 				panDon1 += panDon2;
 				myMoney1 -= panDon2;
 				getPanDon().setText(Integer.toString(panDon1));
-				myMoney.setText(Integer.toString(myMoney1));
+				myMoney.setText(Integer.toString(myMoney1) + " 원");
 				panDon2 += panDon2;
 				myTurn = true;
 				comTurn = false;
@@ -218,6 +226,8 @@ public class MiniPoker extends JPanel{
 					call.setEnabled(false);
 					ddable.setEnabled(false);
 					half.setEnabled(false);
+					myMoney1 = 0;
+					myMoney.setText(myMoney1 + " 원");
 				}
 				
 			}
@@ -238,7 +248,7 @@ public class MiniPoker extends JPanel{
 				panDon1 += panDon2 * 2;
 				myMoney1 -= panDon2 * 2;
 				getPanDon().setText(Integer.toString(panDon1));
-				myMoney.setText(Integer.toString(myMoney1));
+				myMoney.setText(Integer.toString(myMoney1) + " 원");
 				panDon2 += panDon2 * 2;
 				myTurn = true;
 				comTurn = false;
@@ -257,6 +267,8 @@ public class MiniPoker extends JPanel{
 					call.setEnabled(false);
 					ddable.setEnabled(false);
 					half.setEnabled(false);
+					myMoney1 = 0;
+					myMoney.setText(myMoney1 + " 원");
 				}
 				
 			}
@@ -274,11 +286,11 @@ public class MiniPoker extends JPanel{
 
 				System.out.println("하프");
 				sound("sound/music/half.wav");
-				panDon1 += panDon2 / 2;
-				myMoney1 -= panDon2 / 2;
+				panDon1 += panDon2 * 0.3;
+				myMoney1 -= panDon2 * 0.3;
 				getPanDon().setText(Integer.toString(panDon1));
-				myMoney.setText(Integer.toString(myMoney1));
-				panDon2 += panDon2 / 2;
+				myMoney.setText(Integer.toString(myMoney1) + " 원");
+				panDon2 += panDon2 * 0.3;
 				myTurn = true;
 				comTurn = false;
 				stop = false;
@@ -296,6 +308,8 @@ public class MiniPoker extends JPanel{
 					call.setEnabled(false);
 					ddable.setEnabled(false);
 					half.setEnabled(false);
+					myMoney1 = 0;
+					myMoney.setText(myMoney1 + " 원");
 				}
 				
 			}
@@ -316,8 +330,6 @@ public class MiniPoker extends JPanel{
         			JOptionPane.showMessageDialog(null, "카드를 최대 5장을 받아서 컴퓨터와 대결하는 미니게임입니다.","게임설명",JOptionPane.QUESTION_MESSAGE);
         			break;
         		case KeyEvent.VK_ESCAPE :
-        			
-        			mf.change("gameCenter");
         			
         			break;
         		case KeyEvent.VK_SPACE :
@@ -343,6 +355,14 @@ public class MiniPoker extends JPanel{
         
 	}
 	
+	public static int getMyMoney1() {
+		return myMoney1;
+	}
+
+	public static void setMyMoney1(int myMoney1) {
+		MiniPoker.myMoney1 = myMoney1;
+	}
+
 	public JLabel getComMoney() {
 		return comMoney;
 	}
