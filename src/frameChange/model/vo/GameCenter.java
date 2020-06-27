@@ -25,15 +25,15 @@ public class GameCenter extends Maps{
 	@Override
 	public void setXY() {
 		// 1번 구역
-		for(int i = 10; i < 1010; i++) {			// 가로 좌표 범위: 10 < x < 50
-			for(int j=10; j< 700; j++) {		// 세로 좌표 범위: 100 < y < 200
+		for(int i = 410; i < 520; i++) {			// 가로 좌표 범위: 10 < x < 50
+			for(int j=250; j< 700; j++) {		// 세로 좌표 범위: 100 < y < 200
 				this.inputLocation(i, j, true);
 			}
 		}		
 		
 		// 2번 구역
-		for(int i = 10; i < 50; i++) {			// 가로 좌표 범위: 10 < x < 50
-			for(int j=100; j< 200; j++) {		// 세로 좌표 범위: 100 < y < 200
+		for(int i = 20; i < 930; i++) {			// 가로 좌표 범위: 10 < x < 50
+			for(int j=250; j< 590; j++) {		// 세로 좌표 범위: 100 < y < 200
 				this.inputLocation(i, j, true);
 			}
 		}
