@@ -10,6 +10,7 @@ import frameChange.model.vo.GameCenter;
 import frameChange.model.vo.Maps;
 import frameChange.model.vo.Market;
 import frameChange.model.vo.Town;
+import frameChange.view.FindPage;
 import frameChange.view.Login;
 import frameChange.view.MapViewer;
 import frameChange.view.NewUser;
@@ -22,7 +23,7 @@ public class ChangePanel extends JFrame{
 	
 	private NewUser newuser;
 	private Login login;
-//	public FindPage findpage;
+	public FindPage findpage;
 //	public MainTown maintown;
 	private ChangePanel mf;
 	private PlayerMain playerMain;
@@ -91,13 +92,15 @@ public class ChangePanel extends JFrame{
 			revalidate();
 			repaint();
 		}
-//		if(panelName.equals("FindPage")) {
-//			findpage = new FindPage(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(findpage);
-//			revalidate();
-//			repaint();
-//		}
+		
+		if(panelName.equals("FindPage")) {
+			findpage = new FindPage(this);
+			getContentPane().removeAll();
+			getContentPane().add(findpage);
+			revalidate();
+			repaint();
+		}
+		
 //		if(panelName.equals("maintown")) {
 //			maintown = new MainTown(this);
 //			getContentPane().removeAll();

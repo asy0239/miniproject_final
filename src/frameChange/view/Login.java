@@ -63,6 +63,7 @@ public class Login extends JPanel{
 		//아이디, 비밀번호 찾기
 		JButton findbtn = new JButton("ID/PW 찾기");
 		add(findbtn).setBounds(755, 660, 100, 30);
+		findbtn.addActionListener(new FindActionListener());
 		
 		//회원가입
 		JButton signupbtn = new JButton("회원가입");
@@ -145,6 +146,14 @@ public class Login extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			win.change("startpage");
+		}
+	}
+	
+	//아이디, 비밀번호 찾기
+	class FindActionListener implements ActionListener {     
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			win.change("FindPage");
 		}
 	}
 	
