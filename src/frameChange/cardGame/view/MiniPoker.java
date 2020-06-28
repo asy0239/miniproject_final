@@ -114,7 +114,7 @@ public class MiniPoker extends JPanel{
 	Thread t1 = new Computer(buffer);
 	Thread t2 = new User(buffer);
 	
-	public MiniPoker(ChangePanel mf) {
+	public MiniPoker(ChangePanel mf, frameChange.model.vo.Player player) {
 		this.mf = mf;
         
 /*		if(comTurn == true) {
@@ -431,7 +431,7 @@ public class MiniPoker extends JPanel{
         			break;
         		case KeyEvent.VK_ESCAPE :
         			
-        			mf.change("gameCenter");
+        			mf.change("gameCenter", player);
         			myMoney1 = 500000;
         			myMoney.setText(myMoney1 + " 원");
         			comMoney1 = 500000;
