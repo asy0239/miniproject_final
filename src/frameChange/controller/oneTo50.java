@@ -9,42 +9,91 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import frameChange.model.vo.Player;
 
 class oneTo50 extends JPanel implements ActionListener {
 	String path = System.getProperty("user.dir") + "\\images\\";
 	private ChangePanel win;
+	private Player player;
 	Random ran = new Random();
 
 	JButton gameBtn[][];
 	JButton resetBtn;
 	JButton exitBtn;
-
+	JButton startBtn;
+	
+	JLabel btnNum = new JLabel();
+	JLabel nextNum;
+	JLabel numClick = new JLabel();
+	JLabel manyClick;
+	
+	String name;
+	
+	int timecheck;
 	int front[][];
 	int back[][];
 	int gameNum; // 맞춰야하는 숫자
 	int clickNum; //클릭 수. 잘못 클릭한것도 세준다
+	int total;
+	
+	
 	ImageIcon backG = new ImageIcon(path + "bg\\1to50bg.png");
 
-	public oneTo50(ChangePanel win) {
+	public oneTo50(ChangePanel win, Player player) {
 		this.win = win;
+		this.player = player;
 		setLayout(null);
-
+		
+		timecheck = 0;
+		gameNum = 1;
+		clickNum = 0;
+	
+		
+		JLabel nextNum = new JLabel("다음 눌러야 할 번호", JLabel.RIGHT);
+		nextNum.setForeground(Color.white);
+		nextNum.setBounds(700, 100, 150, 50);
+		
+		btnNum.setBounds(700, 150, 100, 50);
+		btnNum.setText("" + gameNum);
+		btnNum.setForeground(Color.black);
+		btnNum.setOpaque(true);
+		
+		JLabel manyClick = new JLabel("클릭한 횟수", JLabel.RIGHT);
+		manyClick.setForeground(Color.white);
+		manyClick.setBounds(700, 250, 150, 50);
+		
+	
+		numClick.setBounds(700, 350, 100, 50);
+		numClick.setText("" + clickNum);
+		numClick.setForeground(Color.black);
+		numClick.setOpaque(true);
+		
+		
+		
+		
 		exitBtn = new JButton("exit");
-		exitBtn.setBounds(800, 250, 100, 50);
+		exitBtn.setBounds(700, 500, 100, 50);
 		exitBtn.setBorder(null);
 		exitBtn.addActionListener(this);
 
 		resetBtn = new JButton("reset");
 		resetBtn.setBorder(null);
-		resetBtn.setBounds(800, 400, 100, 50);
+		resetBtn.setBounds(700, 600, 100, 50);
 		resetBtn.addActionListener(this);
+		
+		add(nextNum);
+		add(btnNum);
+		add(manyClick);
+		add(numClick);
 		add(exitBtn);
 		add(resetBtn);
+		
 
-		gameNum = 1;
-		clickNum = 0;
+	
 
 
 		gameBtn = new JButton[5][5];
@@ -53,6 +102,10 @@ class oneTo50 extends JPanel implements ActionListener {
 		setNumber();
 		setButton();
 
+	}
+	
+	public void Timer() {
+		
 	}
 
 	// 배경을 그리는 부분
@@ -134,6 +187,8 @@ class oneTo50 extends JPanel implements ActionListener {
 			for (int j = 0; j < 5; j++) {
 				if (e.getSource() == gameBtn[i][j]) {
 					clickNum++;
+					numClick.setText("" + clickNum);
+					
 					if (front[i][j] == gameNum) {
 						
 						if (0 < gameNum && gameNum < 26) {
@@ -145,10 +200,13 @@ class oneTo50 extends JPanel implements ActionListener {
 							gameBtn[i][j].setText("");
 							gameBtn[i][j].setBackground(Color.darkGray);
 						}
-						gameNum += 1;
+						gameNum++;
+						btnNum.setText("" + gameNum);
 						if (gameNum > 50) {
 							gameNum = 50;
-							JOptionPane.showMessageDialog(null, "게임이 종료되었습니다. 클릭한 횟수는 " + clickNum + "입니다.  다시하시려면 리셋 버튼을 눌러주세요");
+							name = JOptionPane.showInputDialog("이름을 입력해주세요 ");
+							System.out.println(name);
+							JOptionPane.showMessageDialog(null, name + "님 게임이 종료되었습니다. 클릭한 횟수는 " + clickNum + "입니다.  다시하시려면 리셋 버튼을 눌러주세요");
 						}
 
 					}
@@ -160,9 +218,13 @@ class oneTo50 extends JPanel implements ActionListener {
 			reset();
 		}
 		if (e.getSource() == exitBtn) {
-			win.change("gameCenter");
+			win.change("gameCenter", player);
 		}
 
+	}
+	public void result () {
+		
+		total = clickNum;
 	}
 
 }

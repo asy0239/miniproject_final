@@ -112,7 +112,8 @@ public class MiniPoker extends JPanel{
 	Thread t1 = new Computer(buffer);
 	Thread t2 = new User(buffer);
 	
-	public MiniPoker(ChangePanel mf) {
+	// frameChange.model.vo.Player mainPlayer : 맵 상에 돌아다니는 player 객체
+	public MiniPoker(ChangePanel mf, frameChange.model.vo.Player mainPlayer) {
 		this.mf = mf;
         
 /*		if(comTurn == true) {
@@ -417,6 +418,7 @@ public class MiniPoker extends JPanel{
         			break;
         		case KeyEvent.VK_ESCAPE :
         			
+
         			mf.change("gameCenter");
         			myMoney1 = 500000;
         			myMoney.setText(myMoney1 + " 원");
@@ -428,6 +430,9 @@ public class MiniPoker extends JPanel{
         			tt.setTurn(false);
         			turnCho = 0;
         			turnTimer.setText(10 + "초");
+
+        			mf.change("gameCenter", mainPlayer);
+        	
         			break;
         		case KeyEvent.VK_SPACE :
         			

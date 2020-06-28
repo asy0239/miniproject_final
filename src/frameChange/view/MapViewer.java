@@ -1,6 +1,5 @@
 package frameChange.view;
 
-
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,7 +16,9 @@ import javax.swing.Timer;
 
 import frameChange.controller.ChangePanel;
 import frameChange.controller.MapManager;
+import frameChange.model.vo.GameCenter;
 import frameChange.model.vo.Maps;
+import frameChange.model.vo.Player;
 
 public class MapViewer extends JPanel {
 
@@ -26,6 +27,7 @@ public class MapViewer extends JPanel {
 	private Graphics screenGraphics;
 	private MapManager mapManager;
 	private Maps map;
+	private Player player;
 	public int check = 0;
 
 	public int getCheck() {
@@ -36,21 +38,22 @@ public class MapViewer extends JPanel {
 		this.check = check;
 	}
 
-	public MapViewer(ChangePanel win, Maps map) {
+	public MapViewer(ChangePanel win, Maps map, Player player) {
 		super();
 		this.win = win;
 		this.map = map;
+		this.player = player;
 		// 맵 이름 전달받아야 함
-		mapManager = new MapManager(map);
-		
+		mapManager = new MapManager(win, map, player);
+
 		this.setFocusable(true);
-        this.requestFocus();
-        this.setSize(1024, 768);
+		this.requestFocus();
+		this.setSize(1024, 768);
 		this.setLayout(null);
 		this.setVisible(true);
 
 		addKeyListener(new KeyHandler());
-		
+
 		EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
@@ -74,12 +77,11 @@ public class MapViewer extends JPanel {
 		screenGraphics = screenImage.getGraphics();
 		doubleBuffered(screenGraphics);
 		g.drawImage(screenImage, 0, 0, null);
-		
+
 		g.drawImage(mapManager.getPlayer().getPlayerNow(), mapManager.getPlayer().getX(), mapManager.getPlayer().getY(),
 				null);
 	}
 
-	
 	public void doubleBuffered(Graphics g) {
 		g.drawImage(mapManager.getPlayer().moveImage(), mapManager.getPlayer().getX(), mapManager.getPlayer().getY(),
 				null);
@@ -97,7 +99,6 @@ public class MapViewer extends JPanel {
 		HashSet<Integer> pressedKeys = new HashSet<Integer>();
 		Timer timer;
 
-		
 		public KeyHandler() {
 			timer = new Timer(50, new ActionListener() {
 				@Override
@@ -111,31 +112,29 @@ public class MapViewer extends JPanel {
 						int tempX = mapManager.getPlayer().getX();
 						int tempY = mapManager.getPlayer().getY();
 						int tempPerMove = mapManager.getPlayer().getPerMove();
-						
-						
+
 						int n = 0;
 
 						while (i.hasNext()) {
 							n = i.next();
 
-							System.out.print(tempX + " + " + tempY + " ");
-							System.out.println(map.checkXY(tempX, tempY+tempPerMove) );
-							
-							
 							switch (n) {
 
 							case KeyEvent.VK_UP:
+								System.out.print(tempX + " + " + tempY + " ");
+								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								// player가 이동하려는 좌표의 location 값이 true인지 확인
 								if (map.checkXY(tempX, tempY - tempPerMove)) {
 									mapManager.getPlayer().setY(tempY - tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
 								}
 								mapManager.getPlayer().setStatus(1);
-								
-								
+
 								break;
 
 							case KeyEvent.VK_DOWN:
+								System.out.print(tempX + " + " + tempY + " ");
+								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX, tempY + tempPerMove)) {
 									mapManager.getPlayer().setY(tempY + tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -144,6 +143,8 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_LEFT:
+								System.out.print(tempX + " + " + tempY + " ");
+								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX - tempPerMove, tempY)) {
 									mapManager.getPlayer().setX(tempX - tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -152,6 +153,8 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_RIGHT:
+								System.out.print(tempX + " + " + tempY + " ");
+								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX + tempPerMove, tempY)) {
 									mapManager.getPlayer().setX(tempX + tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -160,19 +163,33 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_BACK_SPACE:
-								// 여긴 보류
 								// 로그인 창으로 되돌아가기
 								break;
+								
+							case KeyEvent.VK_SPACE:
+								// 맵 별로 다른 작동
+								
+								
+								// GameCenter
+								// 게임기 앞에서 누르면 게임기 창 실행
+								if(map instanceof GameCenter)
+								((GameCenter)map).playArcade(player, win);
+								timer.stop();
+								
 							}
 							repaint();
 						}
 					} else {
 						timer.stop();
+						// 맵 이동 가능한 좌표에 이르렀을 시 맵 이동
+						mapManager.moveNextMap(map, player, win);
 					}
 				}
 			});
+			
+			
+			
 		}
-		
 
 		@Override
 		public void keyPressed(KeyEvent keyEvent) {
@@ -185,12 +202,12 @@ public class MapViewer extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent keyEvent) {
+			player.setPlayMove(false);
+			repaint();
 			// HashSet에서 키코드를 제거한다
-			
-			map.mapChange(mapManager.getPlayer().getX(), mapManager.getPlayer().getY(), win);
-
 			int keyCode = keyEvent.getKeyCode();
 			pressedKeys.remove(keyCode);
+
 		}
 
 		@Override
@@ -200,9 +217,8 @@ public class MapViewer extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
-		}
 
+		}
 
 	}
 
