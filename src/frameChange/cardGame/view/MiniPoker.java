@@ -97,6 +97,8 @@ public class MiniPoker extends JPanel{
 	private ImageIcon jocboState3; private ImageIcon jocboState4;
 	private ImageIcon jocboState5;
 	
+	private JLabel start; private Image startImage;
+	
 	private int comI = 0; private int userI = 0;
 	
 	Image jdlogBack; JDialog jdlog = new JDialog();JPanel jp = new JPanel();
@@ -112,8 +114,7 @@ public class MiniPoker extends JPanel{
 	Thread t1 = new Computer(buffer);
 	Thread t2 = new User(buffer);
 	
-	// frameChange.model.vo.Player mainPlayer : 맵 상에 돌아다니는 player 객체
-	public MiniPoker(ChangePanel mf, frameChange.model.vo.Player mainPlayer) {
+	public MiniPoker(ChangePanel mf) {
 		this.mf = mf;
         
 /*		if(comTurn == true) {
@@ -129,6 +130,13 @@ public class MiniPoker extends JPanel{
 		play();
 		
 		jdlogBack = new ImageIcon("images/card/PokerBack.jpg").getImage().getScaledInstance(600, 600, 0);
+		
+		startImage = new ImageIcon("images/card/startClick.png").getImage();
+		start = new JLabel(new ImageIcon(startImage));
+		start.setSize(570, 40);
+		start.setLocation(240, 281);
+		start.setVisible(true);
+		add(start);
 		
 		jdlog.setTitle("게임 설명");
 		jdlog.setLayout(null);
@@ -185,7 +193,7 @@ public class MiniPoker extends JPanel{
 		wiki3.setLocation(10, 180);
 		
 		JLabel wiki3_1 = new JLabel();
-		wiki3_1.setText("조커 < 스페이드 < 다이아몬드 < 클로버 < 하트");
+		wiki3_1.setText("조커 > 스페이드 > 다이아몬드 > 클로버 > 하트");
 		wiki3_1.setSize(500, 15);
 		wiki3_1.setLocation(10, 195);
 		
@@ -399,6 +407,11 @@ public class MiniPoker extends JPanel{
 			}
 		});
         
+		die.setEnabled(false);
+		call.setEnabled(false);
+		ddable.setEnabled(false);
+		half.setEnabled(false);
+        
         this.setSize(1024, 768);
         mf.add(this);
         
@@ -418,6 +431,7 @@ public class MiniPoker extends JPanel{
         			break;
         		case KeyEvent.VK_ESCAPE :
         			
+        			mf.change("gameCenter");
         			myMoney1 = 500000;
         			myMoney.setText(myMoney1 + " 원");
         			comMoney1 = 500000;
@@ -428,9 +442,7 @@ public class MiniPoker extends JPanel{
         			tt.setTurn(false);
         			turnCho = 0;
         			turnTimer.setText(10 + "초");
-
-        			mf.change("gameCenter", mainPlayer);
-        	
+        			start.setVisible(true);
         			break;
         		case KeyEvent.VK_SPACE :
         			
@@ -442,7 +454,7 @@ public class MiniPoker extends JPanel{
         			} else {
         				
         				t1.start(); t2.start();
-        				
+        				start.setVisible(false);
         				isStart = false;
         				
         			}
@@ -730,65 +742,130 @@ public class MiniPoker extends JPanel{
 	public String myresult() {
 		
 			if (ud.getJocbo()[4][0] == 4) {
-				mypoint += 20;
+				
 				return "A포카드!";
 			} else if (ud.getJocbo()[3][0] == 4) {
-				mypoint += 19;
+				
 				return "K포카드!";
 			} else if (ud.getJocbo()[2][0] == 4) {
-				mypoint += 18;
+				
 				return "Q포카드!";
 			} else if (ud.getJocbo()[1][0] == 4) {
-				mypoint += 17;
+				
 				return "J포카드!";
 			} else if(ud.getJocbo()[0][0] == 3) {
-				mypoint += 16;
+
 				return "조커트리플!";
 			} else if (ud.getJocbo()[4][0] == 3) {
-				mypoint += 15;
+				
 				return "A트리플!";
 			} else if (ud.getJocbo()[3][0] == 3) {
-				mypoint += 14;
+				
 				return "K트리플!";
 			} else if (ud.getJocbo()[2][0] == 3) {
-				mypoint += 13;
+				
 				return "Q트리플!";
 			} else if (ud.getJocbo()[1][0] == 3) {
-				mypoint += 12;
+				
 				return "J트리플!";
 			} else if (ud.getJocbo()[0][0] == 2) {
-				mypoint += 11;
+				
 				return "조커투페어!";
 			} else if (ud.getJocbo()[4][0] == 2) {
-				mypoint += 10;
+				
 				return "A투페어!";
 			} else if (ud.getJocbo()[3][0] == 2) {
-				mypoint += 9;
+				
 				return "K투페어!";
 			} else if (ud.getJocbo()[2][0] == 2) {
-				mypoint += 8;
+				
 				return "Q투페어!";
 			} else if (ud.getJocbo()[1][0] == 2) {
-				mypoint += 7;
+				
 				return "J투페어!";
 			} else if (ud.getJocbo()[0][0] == 1) {
-				mypoint += 6;
+				
 				return "조커원페어!";
 			} else if (ud.getJocbo()[4][0] == 1) {
-				mypoint += 5;
+				
 				return "A원페어!";
 			} else if (ud.getJocbo()[3][0] == 1) {
-				mypoint += 4;
+				
 				return "K원페어!";
 			} else if (ud.getJocbo()[2][0] == 1) {
-				mypoint += 3;
+				
 				return "Q원페어!";
 			} else if (ud.getJocbo()[1][0] == 1) {
-				mypoint += 2;
+				
 				return "J원페어!";
 			}		
 			
 		return "";
+		
+	}
+	
+	public void myPoint() {
+		
+		if (ud.getJocbo()[4][0] == 4) {
+			mypoint += 20;
+			
+		} else if (ud.getJocbo()[3][0] == 4) {
+			mypoint += 19;
+			
+		} else if (ud.getJocbo()[2][0] == 4) {
+			mypoint += 18;
+			
+		} else if (ud.getJocbo()[1][0] == 4) {
+			mypoint += 17;
+			
+		} else if(ud.getJocbo()[0][0] == 3) {
+			mypoint += 16;
+			
+		} else if (ud.getJocbo()[4][0] == 3) {
+			mypoint += 15;
+			
+		} else if (ud.getJocbo()[3][0] == 3) {
+			mypoint += 14;
+			
+		} else if (ud.getJocbo()[2][0] == 3) {
+			mypoint += 13;
+			
+		} else if (ud.getJocbo()[1][0] == 3) {
+			mypoint += 12;
+			
+		} else if (ud.getJocbo()[0][0] == 2) {
+			mypoint += 11;
+			
+		} else if (ud.getJocbo()[4][0] == 2) {
+			mypoint += 10;
+			
+		} else if (ud.getJocbo()[3][0] == 2) {
+			mypoint += 9;
+			
+		} else if (ud.getJocbo()[2][0] == 2) {
+			mypoint += 8;
+			
+		} else if (ud.getJocbo()[1][0] == 2) {
+			mypoint += 7;
+			
+		} else if (ud.getJocbo()[0][0] == 1) {
+			mypoint += 6;
+			
+		} else if (ud.getJocbo()[4][0] == 1) {
+			mypoint += 5;
+			
+		} else if (ud.getJocbo()[3][0] == 1) {
+			mypoint += 4;
+			
+		} else if (ud.getJocbo()[2][0] == 1) {
+			mypoint += 3;
+			
+		} else if (ud.getJocbo()[1][0] == 1) {
+			mypoint += 2;
+			
+		}	
+		
+		
 		
 	}
 	
@@ -870,7 +947,7 @@ public class MiniPoker extends JPanel{
 		}
 	 
 	}
-	
+	  
 	public void sound(String fileName) {
 		
 		try {
@@ -1104,7 +1181,9 @@ public JLabel getPanDon() {
 					}
 					
 					ud.deck(userI, MiniPoker.this);
-
+					
+					myPoint();
+					
 					System.out.println("나의 족보: " + myresult());
 					System.out.println("컴퓨터 족보: " + comresult());
 					System.out.println(mypoint);

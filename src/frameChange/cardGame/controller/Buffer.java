@@ -24,7 +24,7 @@ public class Buffer{
 				e.printStackTrace();
 			}
 		}
-
+        
 		tTimer.TimerStart(mp);
 		
 		if(mp.getMyMoney1() <= 0) {
@@ -239,14 +239,26 @@ public class Buffer{
 			
 		}
 		
-
+		if(data == 1) {
+			
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else {
 		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+				
 		notify();
 
 	}

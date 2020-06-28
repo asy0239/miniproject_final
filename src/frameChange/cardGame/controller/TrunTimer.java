@@ -13,7 +13,7 @@ public class TrunTimer {
 	public TrunTimer() {
 		
 	}
-	
+	  
 	public boolean isTurn() {
 		return turn;
 	}

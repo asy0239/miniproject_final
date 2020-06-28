@@ -11,7 +11,7 @@ public class UserDeck {
 	public UserDeck() {
 		
 	}
-	
+	  
 public void deck(int turn, MiniPoker mp) {
 		
 		int zz = turn + 1;

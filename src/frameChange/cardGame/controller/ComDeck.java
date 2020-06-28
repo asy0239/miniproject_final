@@ -11,7 +11,7 @@ public class ComDeck {
 	public ComDeck() {
 		
 	}
-	
+	  
 	public void deck(int turn, MiniPoker mp) {
 		int zz = turn +1;
 		
