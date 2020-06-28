@@ -46,9 +46,6 @@ public class Player {
 
 		moveImage();
 		
-		npcImage = new ImageIcon(path + "chracter\\downStrand.png").getImage().getScaledInstance(50, 50, 0);
-		
-		
 	}
 	
 	// 플레이어의 현재 모습을 반환

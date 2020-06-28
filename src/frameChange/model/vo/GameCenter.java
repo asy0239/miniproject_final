@@ -23,8 +23,6 @@ public class GameCenter extends Maps {
 	
 	public void playArcade(Player player, ChangePanel win) {
 		
-		System.out.println("dkjflsdjkfsafjl");
-		
 		if( player.getStatus() == 1
 				&& (player.getX() >= 560 && player.getX() <= 690)
 				&&  player.getY() == 250) {

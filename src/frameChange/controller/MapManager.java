@@ -1,8 +1,11 @@
 package frameChange.controller;
 
+import javax.swing.JOptionPane;
+
 import frameChange.model.vo.GameCenter;
 import frameChange.model.vo.Maps;
 import frameChange.model.vo.Market;
+import frameChange.model.vo.Npc;
 import frameChange.model.vo.Player;
 import frameChange.model.vo.Town;
 
@@ -11,7 +14,10 @@ public class MapManager {
 	private ChangePanel win;
 	private Maps map;
 	private Player player;
-
+	private Npc npc;
+	private ProductManager productManager;
+	private final int cntProduct = 10;
+	
 	public MapManager() {
 	}
 
@@ -51,6 +57,8 @@ public class MapManager {
 			player.setImgPlayerRight1(player.getImgPlayerRight1().getScaledInstance(50, 50, 0));
 			player.setImgPlayerRight2(player.getImgPlayerRight2().getScaledInstance(50, 50, 0));
 
+			this.npc = new Npc(map, player);
+			
 		}
 
 		if (map instanceof Market) {
@@ -80,6 +88,8 @@ public class MapManager {
 			player.setImgPlayerRight1(player.getImgPlayerRight1().getScaledInstance(100, 100, 0));
 			player.setImgPlayerRight2(player.getImgPlayerRight2().getScaledInstance(100, 100, 0));
 
+			this.productManager = new ProductManager();
+			
 		}
 
 		if (map instanceof GameCenter) {
@@ -111,6 +121,14 @@ public class MapManager {
 		}
 	}
 
+	public Npc getNpc() {
+		return npc;
+	}
+
+	public void setNpc(Npc npc) {
+		this.npc = npc;
+	}
+
 	public Maps getMap() {
 		return map;
 	}
@@ -127,6 +145,14 @@ public class MapManager {
 		this.player = player;
 	}
 
+	public ProductManager getProductManager() {
+		return productManager;
+	}
+
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
+	}
+
 	public void moveNextMap(Maps map, Player player, ChangePanel win) {
 		this.win = win;
 		
@@ -136,8 +162,9 @@ public class MapManager {
 
 		case "town":
 			map.saveLocation(player);
-			
-			
+			if(map instanceof Market) {
+				showReceipt((Market)map);
+			}
 			win.change("town", player);
 			break;
 
@@ -153,7 +180,20 @@ public class MapManager {
 
 		default:
 			break;
-		}
+		} 
+	}
+	
+	// 영수증 출력
+	public void showReceipt(Market map) {
+		// 영수증 다이얼로그 출력
+
+		
+		JOptionPane.showMessageDialog(null, map.totalList() ,"영수증",JOptionPane.QUESTION_MESSAGE);
+		
+	}
+	
+	public void resetProductManager() {
+		this.productManager = new ProductManager();
 	}
 	
 }

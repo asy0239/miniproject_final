@@ -10,6 +10,9 @@ public class Town extends Maps {
 	private int userX = 10; // 초기화 할 player의 x 좌표. 최초값: 인스턴스 생성 시 최초 위치
 	private int userY = 10; // 초기화 할 player의 y 좌표. 최초값: 인스턴스 생성 시 최초 위치
 
+	private int npcX = 10;	// 초기화 할 player의 x 좌표. 최초값: 인스턴스 생성 시 최초 위치
+	private int npcY = 10;	// 초기화 할 player의 y 좌표. 최초값: 인스턴스 생성 시 최초 위치
+	
 	public Town() {
 		String path = System.getProperty("user.dir") + "\\images\\";
 
@@ -110,6 +113,22 @@ public class Town extends Maps {
 	public void setUserY(int userY) {
 		this.userY = userY;
 	}
+	
+	public int getNpcX() {
+		return npcX;
+	}
+
+	public void setNpcX(int npcX) {
+		this.npcX = npcX;
+	}
+
+	public int getNpcY() {
+		return npcY;
+	}
+
+	public void setNpcY(int npcY) {
+		this.npcY = npcY;
+	}
 
 	// Player가 위치한 x,y 좌표를 매개변수로 받아
 	// 이동 가능한 좌표인지 판단하여 boolean 값으로 반환
@@ -137,6 +156,13 @@ public class Town extends Maps {
 		this.userX = player.getX();
 		// 건물에서 나왔을 때 한 칸 아래로 초기화되어 건물에 재입장 되는 것 방지
 		this.userY = player.getY() + player.perMove;
+	}
+	
+	
+	public void saveLocation(Player player, Npc npc) {
+		saveLocation(player);
+		this.npcX = npc.getX();
+		this.npcY = npc.getY();
 	}
 
 }

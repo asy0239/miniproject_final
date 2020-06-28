@@ -18,7 +18,9 @@ import frameChange.controller.ChangePanel;
 import frameChange.controller.MapManager;
 import frameChange.model.vo.GameCenter;
 import frameChange.model.vo.Maps;
+import frameChange.model.vo.Market;
 import frameChange.model.vo.Player;
+import frameChange.model.vo.Town;
 
 public class MapViewer extends JPanel {
 
@@ -28,15 +30,6 @@ public class MapViewer extends JPanel {
 	private MapManager mapManager;
 	private Maps map;
 	private Player player;
-	public int check = 0;
-
-	public int getCheck() {
-		return check;
-	}
-
-	public void setCheck(int check) {
-		this.check = check;
-	}
 
 	public MapViewer(ChangePanel win, Maps map, Player player) {
 		super();
@@ -78,14 +71,37 @@ public class MapViewer extends JPanel {
 		doubleBuffered(screenGraphics);
 		g.drawImage(screenImage, 0, 0, null);
 
-		g.drawImage(mapManager.getPlayer().getPlayerNow(), mapManager.getPlayer().getX(), mapManager.getPlayer().getY(),
-				null);
+		// if (this.map instanceof Town) {
+		// g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
+		// mapManager.getNpc().getY(), null);
+		// }
+
+		if (map instanceof Market) {
+			for (int i = 0; i < mapManager.getProductManager().getCntProduct(); i++) {
+				if (mapManager.getProductManager().getProductList()[i].isChecked() == false) {
+					g.drawImage(mapManager.getProductManager().getProductList()[i].getImg(),
+							mapManager.getProductManager().getProductList()[i].getX(),
+							mapManager.getProductManager().getProductList()[i].getY(), null);
+				System.out.println(player.getX() + " " + player.getY());
+					System.out.println(mapManager.getProductManager().getProductList()[i].getImg() + " : " + mapManager.getProductManager().getProductList()[i].getX() + " " +
+							mapManager.getProductManager().getProductList()[i].getY());
+				}
+			}
+		}
+
+		g.drawImage(player.getPlayerNow(), player.getX(), player.getY(), null);
+
 	}
 
 	public void doubleBuffered(Graphics g) {
 		g.drawImage(mapManager.getPlayer().moveImage(), mapManager.getPlayer().getX(), mapManager.getPlayer().getY(),
 				null);
+		// if (this.map instanceof Town) {
+		// g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
+		// mapManager.getNpc().getY(), null);
+		// }
 		g.drawImage(map.getImgBackground(), 0, 0, null);
+
 	}
 
 	public class KeyHandler implements KeyListener, ActionListener {
@@ -101,6 +117,7 @@ public class MapViewer extends JPanel {
 
 		public KeyHandler() {
 			timer = new Timer(50, new ActionListener() {
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// 50ms마다 발생한 액션 이벤트 처리
@@ -121,8 +138,6 @@ public class MapViewer extends JPanel {
 							switch (n) {
 
 							case KeyEvent.VK_UP:
-								System.out.print(tempX + " + " + tempY + " ");
-								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								// player가 이동하려는 좌표의 location 값이 true인지 확인
 								if (map.checkXY(tempX, tempY - tempPerMove)) {
 									mapManager.getPlayer().setY(tempY - tempPerMove);
@@ -133,8 +148,6 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_DOWN:
-								System.out.print(tempX + " + " + tempY + " ");
-								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX, tempY + tempPerMove)) {
 									mapManager.getPlayer().setY(tempY + tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -143,8 +156,6 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_LEFT:
-								System.out.print(tempX + " + " + tempY + " ");
-								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX - tempPerMove, tempY)) {
 									mapManager.getPlayer().setX(tempX - tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -153,8 +164,6 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_RIGHT:
-								System.out.print(tempX + " + " + tempY + " ");
-								System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 								if (map.checkXY(tempX + tempPerMove, tempY)) {
 									mapManager.getPlayer().setX(tempX + tempPerMove);
 									mapManager.getPlayer().setPlayMove(true);
@@ -165,30 +174,39 @@ public class MapViewer extends JPanel {
 							case KeyEvent.VK_BACK_SPACE:
 								// 로그인 창으로 되돌아가기
 								break;
-								
+
 							case KeyEvent.VK_SPACE:
 								// 맵 별로 다른 작동
-								
-								
+
+								// Market
+								// 아이템 위에서 누르면 해당 아이템이 화면에서 사라지고
+								// inventory에 해당 아이템의 개수가 증가한다.
+								if (map instanceof Market) {
+									((Market) map).collectItems(player,
+											mapManager.getProductManager().getProductList());
+								}
+
 								// GameCenter
 								// 게임기 앞에서 누르면 게임기 창 실행
-								if(map instanceof GameCenter)
-								((GameCenter)map).playArcade(player, win);
-								timer.stop();
-								
+								if (map instanceof GameCenter) {
+									((GameCenter) map).playArcade(player, win);
+									timer.stop();
+								}
 							}
+							System.out.print(tempX + " + " + tempY + " ");
+							System.out.println(map.checkXY(tempX, tempY + tempPerMove));
 							repaint();
 						}
 					} else {
 						timer.stop();
 						// 맵 이동 가능한 좌표에 이르렀을 시 맵 이동
 						mapManager.moveNextMap(map, player, win);
+						repaint();
 					}
 				}
+
 			});
-			
-			
-			
+
 		}
 
 		@Override
