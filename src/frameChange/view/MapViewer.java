@@ -172,7 +172,6 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_BACK_SPACE:
-								// 로그인 창으로 되돌아가기
 								break;
 
 							case KeyEvent.VK_SPACE:

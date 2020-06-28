@@ -40,6 +40,7 @@ public class Start {
 				clip = AudioSystem.getClip();
 				clip.open(audio);
 				clip.start();
+				clip.loop(-1);
 			} catch (LineUnavailableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
