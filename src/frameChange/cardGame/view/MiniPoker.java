@@ -418,8 +418,6 @@ public class MiniPoker extends JPanel{
         			break;
         		case KeyEvent.VK_ESCAPE :
         			
-
-        			mf.change("gameCenter");
         			myMoney1 = 500000;
         			myMoney.setText(myMoney1 + " 원");
         			comMoney1 = 500000;
