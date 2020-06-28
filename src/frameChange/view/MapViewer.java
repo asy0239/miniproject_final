@@ -16,6 +16,7 @@ import javax.swing.Timer;
 
 import frameChange.controller.ChangePanel;
 import frameChange.controller.MapManager;
+import frameChange.model.vo.GameCenter;
 import frameChange.model.vo.Maps;
 import frameChange.model.vo.Player;
 
@@ -162,14 +163,26 @@ public class MapViewer extends JPanel {
 								break;
 
 							case KeyEvent.VK_BACK_SPACE:
-								// 여긴 보류
 								// 로그인 창으로 되돌아가기
 								break;
+								
+							case KeyEvent.VK_SPACE:
+								// 맵 별로 다른 작동
+								
+								
+								// GameCenter
+								// 게임기 앞에서 누르면 게임기 창 실행
+								if(map instanceof GameCenter)
+								((GameCenter)map).playArcade(player, win);
+								timer.stop();
+								
 							}
 							repaint();
 						}
 					} else {
 						timer.stop();
+						// 맵 이동 가능한 좌표에 이르렀을 시 맵 이동
+						mapManager.moveNextMap(map, player, win);
 					}
 				}
 			});
@@ -194,8 +207,7 @@ public class MapViewer extends JPanel {
 			// HashSet에서 키코드를 제거한다
 			int keyCode = keyEvent.getKeyCode();
 			pressedKeys.remove(keyCode);
-			// 맵 이동 가능한 좌표에 이르렀을 시 맵 이동
-			mapManager.moveNextMap(map, player, win);
+
 		}
 
 		@Override

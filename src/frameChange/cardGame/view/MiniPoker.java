@@ -109,7 +109,8 @@ public class MiniPoker extends JPanel{
 	Thread t1 = new Computer(buffer);
 	Thread t2 = new User(buffer);
 	
-	public MiniPoker(ChangePanel mf) {
+	// frameChange.model.vo.Player mainPlayer : 맵 상에 돌아다니는 player 객체
+	public MiniPoker(ChangePanel mf, frameChange.model.vo.Player mainPlayer) {
 		this.mf = mf;
         
 /*		if(comTurn == true) {
@@ -330,6 +331,8 @@ public class MiniPoker extends JPanel{
         			JOptionPane.showMessageDialog(null, "카드를 최대 5장을 받아서 컴퓨터와 대결하는 미니게임입니다.","게임설명",JOptionPane.QUESTION_MESSAGE);
         			break;
         		case KeyEvent.VK_ESCAPE :
+        			
+        			mf.change("gameCenter", mainPlayer);
         			
         			break;
         		case KeyEvent.VK_SPACE :
