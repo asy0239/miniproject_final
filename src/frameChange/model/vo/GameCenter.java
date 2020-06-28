@@ -20,6 +20,25 @@ public class GameCenter extends Maps {
 		setXY();
 		this.setTitle("gameCenter");
 	}
+	
+	public void playArcade(Player player, ChangePanel win) {
+		
+		System.out.println("dkjflsdjkfsafjl");
+		
+		if( player.getStatus() == 1
+				&& (player.getX() >= 560 && player.getX() <= 690)
+				&&  player.getY() == 250) {
+			
+			win.change("miniPoker", player);
+			
+		} else if(player.getStatus() == 1
+				&& (player.getX() >= 220 && player.getX() <= 300)
+				&&  player.getY() == 250) {
+			
+			win.change("oneTo50", player);
+		}		
+		
+	}
 
 	// 맵마다 이동 가능한 위치의 location 값을 true로 변경
 	@Override

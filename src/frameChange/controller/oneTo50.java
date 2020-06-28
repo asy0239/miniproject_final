@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import frameChange.model.vo.Player;
+
 class oneTo50 extends JPanel implements ActionListener {
 	String path = System.getProperty("user.dir") + "\\images\\";
 	private ChangePanel win;
+	private Player player;
 	Random ran = new Random();
 
 	JButton gameBtn[][];
@@ -37,10 +40,12 @@ class oneTo50 extends JPanel implements ActionListener {
 	int clickNum; //클릭 수. 잘못 클릭한것도 세준다
 	int total;
 	
+	
 	ImageIcon backG = new ImageIcon(path + "bg\\1to50bg.png");
 
-	public oneTo50(ChangePanel win) {
+	public oneTo50(ChangePanel win, Player player) {
 		this.win = win;
+		this.player = player;
 		setLayout(null);
 		
 		timecheck = 0;
@@ -213,7 +218,7 @@ class oneTo50 extends JPanel implements ActionListener {
 			reset();
 		}
 		if (e.getSource() == exitBtn) {
-			win.change("gameCenter");
+			win.change("gameCenter", player);
 		}
 
 	}

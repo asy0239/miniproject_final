@@ -66,6 +66,21 @@ public class ChangePanel extends JFrame{
 					revalidate();
 					repaint();
 				}
+				
+				if(panelName.equals("miniPoker")) {
+					miniPoker = new MiniPoker(this, player);
+					getContentPane().removeAll();
+					getContentPane().add(miniPoker);
+					revalidate();
+					repaint();
+				}
+				if(panelName.equals("oneTo50")) {
+					oneTo50 = new oneTo50(this, player);
+					getContentPane().removeAll();
+					getContentPane().add(oneTo50);
+					revalidate();
+					repaint();
+				}
 	}
 	
 	
@@ -117,56 +132,7 @@ public class ChangePanel extends JFrame{
 			repaint();
 		}
 		
-//		if(panelName.equals("maintown")) {
-//			maintown = new MainTown(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(maintown);
-//			revalidate();
-//			repaint();
-//		}
-//		
-//		if(panelName.equals("martin")) {
-//			martin = new MartIn(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(martin);
-//			revalidate();
-//			repaint();
-//		}
-//		if(panelName.equals("playerMain")) {
-//			playerMain = new PlayerMain(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(playerMain);
-//			revalidate();
-//			repaint();
-//		}
-//		if(panelName.equals("playerMart")) {
-//			playerMart = new PlayerMart(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(playerMart);
-//			revalidate();
-//			repaint();
-//		}
-//		if(panelName.equals("playerGame")) {
-//			playerGame = new PlayerGame(this);
-//			getContentPane().removeAll();
-//			getContentPane().add(playerGame);
-//			revalidate();
-//			repaint();
-//		}
-		if(panelName.equals("miniPoker")) {
-			miniPoker = new MiniPoker(this);
-			getContentPane().removeAll();
-			getContentPane().add(miniPoker);
-			revalidate();
-			repaint();
-		}
-		if(panelName.equals("oneTo50")) {
-			oneTo50 = new oneTo50(this);
-			getContentPane().removeAll();
-			getContentPane().add(oneTo50);
-			revalidate();
-			repaint();
-		}
+
 	}
 	
 }
