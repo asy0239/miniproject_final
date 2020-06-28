@@ -36,9 +36,12 @@ public abstract class Maps extends JPanel {
 	// 맵 고유 좌표에서 이동 가능한 부분 확인
 	public abstract boolean checkXY(int x, int y);
 
-	// 맵 to 맵으로 이동 가능한 좌표 설정
+	// 맵 to 맵으로 이동 가능한 좌표인지 확인
 	// checkXY내에서 사용
-	public abstract void mapChange(int x, int y, ChangePanel win);
+	public abstract String mapChange(int x, int y);
+	
+	// 캐릭터가 다른 맵으로 이동 시 기존의 좌표를 맵 객체에 저장
+	public abstract void saveLocation(Player player);
 	
 	
 	public String getTitle() {
