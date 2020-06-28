@@ -1,4 +1,4 @@
-package frameChange.cardGame.vo;
+package frameChange.cardGame.controller;
 
 import javax.swing.ImageIcon;
 

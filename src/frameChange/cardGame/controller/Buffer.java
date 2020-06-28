@@ -1,8 +1,9 @@
-package frameChange.cardGame.view;
+package frameChange.cardGame.controller;
 
-import frameChange.cardGame.TrunTimer.TrunTimer;
+import frameChange.cardGame.view.MiniPoker;
 
-  
+
+
 public class Buffer{
 	private int data;
 	private boolean empty = true;
@@ -23,7 +24,7 @@ public class Buffer{
 				e.printStackTrace();
 			}
 		}
-		
+
 		tTimer.TimerStart(mp);
 		
 		if(mp.getMyMoney1() <= 0) {
@@ -88,13 +89,14 @@ public class Buffer{
 		mp.getHalf().setEnabled(false);
 		System.out.println("컴퓨터: " + data + " 턴");
 		mp.setStop(true);
-		
+
 		random = (int) (Math.random() * 3);
+		System.out.println(random);
 		int comSecond = (int) (Math.random() * 3) + 1;
 		int second = 0;
 		
 		startStop+=1;
-		System.out.println(startStop);
+		
 		if( startStop  >= 2) {
 			
 			if(comSecond == 1) {
@@ -105,6 +107,8 @@ public class Buffer{
 				
 			} else if (comSecond == 3) {
 				second = 3000;
+			} else {
+				second = 1500;
 			}
 			
 			try {
@@ -167,7 +171,7 @@ public class Buffer{
 				}
 				
 			} else if (random == 0) {
-				int dieRandom = (int) (Math.random() * 10) + 1;
+				int dieRandom = (int) (Math.random() * 11) + 1;
 				
 				if(dieRandom == 3) {
 					///////////////////////////다이
@@ -176,6 +180,58 @@ public class Buffer{
 				} else {
 					
 					random = (int) (Math.random() * 3) + 1;
+					////////////////////////////////콜
+					if(random == 1) {
+						mp.sound("sound/music/call.wav");
+						mp.panDon1 += mp.panDon2;
+						mp.comMoney1 -= mp.panDon2;
+						mp.getPanDon().setText(Integer.toString(mp.panDon1));
+						mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+						mp.panDon2 += mp.panDon2;
+						
+						if(mp.comMoney1 <= 0) {
+							
+							mp.comMoney1 = 0;
+							mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+							mp.sound("sound/music/die.wav");
+							
+						}
+						
+					} else if (random == 2) {
+						///////////////////////////더블
+						mp.sound("sound/music/ddable.wav");
+						mp.panDon1 += mp.panDon2 * 2;
+						mp.comMoney1 -= mp.panDon2 * 2;
+						mp.getPanDon().setText(Integer.toString(mp.panDon1));
+						mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+						mp.panDon2 += mp.panDon2 * 2;
+						
+						if(mp.comMoney1 <= 0) {
+							
+							mp.comMoney1 = 0;
+							mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+							mp.sound("sound/music/die.wav");
+							
+						}
+						
+					} else if (random == 3) {
+						///////////////////////////하프
+						mp.sound("sound/music/half.wav");
+						mp.panDon1 += mp.panDon2 * 0.3;
+						mp.comMoney1 -= mp.panDon2 * 0.3;
+						mp.getPanDon().setText(Integer.toString(mp.panDon1));
+						mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+						mp.panDon2 += mp.panDon2 * 0.3;
+						
+						if(mp.comMoney1 <= 0) {
+							
+							mp.comMoney1 = 0;
+							mp.comMoney.setText(Integer.toString(mp.comMoney1) + " 원");
+							mp.sound("sound/music/die.wav");
+							
+						}
+						
+					}
 					
 				}
 				

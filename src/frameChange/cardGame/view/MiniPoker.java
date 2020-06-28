@@ -15,16 +15,17 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import frameChange.cardGame.TrunTimer.TrunTimer;
-import frameChange.cardGame.vo.ComDeck;
+import frameChange.cardGame.controller.Buffer;
+import frameChange.cardGame.controller.ComDeck;
+import frameChange.cardGame.controller.TrunTimer;
+import frameChange.cardGame.controller.UserDeck;
 import frameChange.cardGame.vo.Player;
-import frameChange.cardGame.vo.UserDeck;
 import frameChange.controller.ChangePanel;
-
 
 public class MiniPoker extends JPanel{
 	
@@ -96,7 +97,9 @@ public class MiniPoker extends JPanel{
 	private ImageIcon jocboState3; private ImageIcon jocboState4;
 	private ImageIcon jocboState5;
 	
+	private int comI = 0; private int userI = 0;
 	
+	Image jdlogBack; JDialog jdlog = new JDialog();JPanel jp = new JPanel();
 	////////////////////////////////////////////////////////////////////////////
 	ImageIcon back;
 	///////////////////////////////////////
@@ -125,6 +128,86 @@ public class MiniPoker extends JPanel{
 		
 		play();
 		
+		jdlogBack = new ImageIcon("images/card/PokerBack.jpg").getImage().getScaledInstance(600, 600, 0);
+		
+		jdlog.setTitle("게임 설명");
+		jdlog.setLayout(null);
+		jp.setLayout(null);
+		
+		JLabel info1 = new JLabel();
+		info1.setText("족보");
+		info1.setSize(500, 15);
+		info1.setLocation(10, 15);
+		
+		JLabel wiki1 = new JLabel();
+		wiki1.setText("같은 카드가 1장이면 원페어, 같은 카드가 2장이면 투페어");
+		wiki1.setSize(500,15);
+		wiki1.setLocation(10, 30);
+		
+		JLabel wiki1_1 = new JLabel();
+		wiki1_1.setText("같은 카드가 3장이면 트리플, 같은 카드가 4장이면 포카드");
+		wiki1_1.setSize(500, 15);
+		wiki1_1.setLocation(10, 45);
+		
+		JLabel wiki2 = new JLabel();
+		wiki2.setText("카드는 총: 19장입니다.");
+		wiki2.setSize(500, 15);
+		wiki2.setLocation(10, 75);
+		
+		JLabel wiki2_1 = new JLabel();
+		wiki2_1.setText("스페이드 A, 다이아몬드 A, 클로버 A, 하트 A");
+		wiki2_1.setSize(500, 15);
+		wiki2_1.setLocation(10, 90);
+		
+		JLabel wiki2_2 = new JLabel();
+		wiki2_2.setText("스페이드 K, 다이아몬드 K, 클로버 K, 하트 K");
+		wiki2_2.setSize(500, 15);
+		wiki2_2.setLocation(10, 105);
+		
+		JLabel wiki2_3 = new JLabel();
+		wiki2_3.setText("스페이드 Q, 다이아몬드 Q, 클로버 Q, 하트 Q");
+		wiki2_3.setSize(500, 15);
+		wiki2_3.setLocation(10, 120);
+		
+		JLabel wiki2_4 = new JLabel();
+		wiki2_4.setText("스페이드 J, 다이아몬드 J, 클로버 J, 하트 J");
+		wiki2_4.setSize(500, 15);
+		wiki2_4.setLocation(10, 135);
+		
+		JLabel wiki2_5 = new JLabel();
+		wiki2_5.setText("레드조커, 블랙조커, 애니메이션 조커");
+		wiki2_5.setSize(500, 15);
+		wiki2_5.setLocation(10, 150);
+		
+		JLabel wiki3 = new JLabel();
+		wiki3.setText("족보 우선순위");
+		wiki3.setSize(500, 15);
+		wiki3.setLocation(10, 180);
+		
+		JLabel wiki3_1 = new JLabel();
+		wiki3_1.setText("조커 < 스페이드 < 다이아몬드 < 클로버 < 하트");
+		wiki3_1.setSize(500, 15);
+		wiki3_1.setLocation(10, 195);
+		
+		jdlog.setSize(400, 300);
+		jdlog.setLocation(1024, 000);
+		jp.setSize(400, 300);
+		jdlog.setVisible(false);
+		
+		jp.add(info1);
+		jp.add(wiki1);
+		jp.add(wiki1_1);
+		jp.add(wiki2);
+		jp.add(wiki2_1);
+		jp.add(wiki2_2);
+		jp.add(wiki2_3);
+		jp.add(wiki2_4);
+		jp.add(wiki2_5);
+		jp.add(wiki3);
+		jp.add(wiki3_1);
+		jdlog.add(jp);
+		
+		
 		this.setLayout(null);
 		/////////////////////////////////////////////////////////
 		jocboState1 = new ImageIcon("images/card/originJocbo.png");
@@ -144,14 +227,14 @@ public class MiniPoker extends JPanel{
 		turnTimer.setForeground(Color.WHITE);
 		add(turnTimer);
 		
-		myMoney = new JLabel(myMoney1 + "원");
+		myMoney = new JLabel(myMoney1 + " 원");
 		myMoney.setSize(100,100);
 		myMoney.setLocation(850, 600);
 		myMoney.setFont(new Font("Serif", Font.BOLD, 20));
 		myMoney.setForeground(Color.WHITE);
 		add(myMoney);
 		
-		comMoney = new JLabel(comMoney1 + "원");
+		comMoney = new JLabel(comMoney1 + " 원");
 		comMoney.setSize(100,100);
 		comMoney.setLocation(70, 0);
 		comMoney.setFont(new Font("Serif", Font.BOLD, 20));
@@ -328,12 +411,28 @@ public class MiniPoker extends JPanel{
         		
         		case KeyEvent.VK_F1 :
 
-        			JOptionPane.showMessageDialog(null, "카드를 최대 5장을 받아서 컴퓨터와 대결하는 미니게임입니다.","게임설명",JOptionPane.QUESTION_MESSAGE);
+//        			JOptionPane.showMessageDialog(null, "카드를 최대 5장을 받아서 컴퓨터와 대결하는 미니게임입니다.","게임설명",JOptionPane.QUESTION_MESSAGE);
+        			
+        			jdlog.setVisible(true);
+        			
         			break;
         		case KeyEvent.VK_ESCAPE :
         			
+
+        			mf.change("gameCenter");
+        			myMoney1 = 500000;
+        			myMoney.setText(myMoney1 + " 원");
+        			comMoney1 = 500000;
+        			comMoney.setText(comMoney1 + " 원");
+        			panDon1 = 1000 * 2;
+        			panDon2 = 1000 * 2;
+        			panDon.setText(panDon1 + "원 ");
+        			tt.setTurn(false);
+        			turnCho = 0;
+        			turnTimer.setText(10 + "초");
+
         			mf.change("gameCenter", mainPlayer);
-        			
+        	
         			break;
         		case KeyEvent.VK_SPACE :
         			
@@ -436,6 +535,7 @@ public class MiniPoker extends JPanel{
 		g.drawImage(back.getImage(), 0, 0, null);
 		setOpaque(false);
 		super.paintComponent(g);
+		
 	}
 	
 	public void addImage(int turn) {
@@ -806,22 +906,24 @@ public JLabel getPanDon() {
 		@Override
 		public void run() {
 
-			for(int i = 1; i <= 4; i++) {
-				criticalData.comTurn(i,MiniPoker.this);
+			for(comI = 1; comI <= 4; comI++) {
+				criticalData.comTurn(comI,MiniPoker.this);
 				
-				if(i == 1) {
+				if(comI == 1) {
 					
-					cd.deck(i, MiniPoker.this);
+					cd.deck(comI, MiniPoker.this);
 
-				} else if (i == 2) {
+				} else if (comI == 2) {
 					
-					cd.deck(i, MiniPoker.this);
-				} else if (i == 3) {
+					cd.deck(comI, MiniPoker.this);
+				} else if (comI == 3) {
 					
-					cd.deck(i, MiniPoker.this);
-				} else if (i == 4) {
+					cd.deck(comI, MiniPoker.this);
+				} else if (comI == 4) {
 					
-					cd.deck(i, MiniPoker.this);
+					cd.deck(comI, MiniPoker.this);
+				} else {
+					break;
 				}
 				
 				try {
@@ -852,10 +954,10 @@ public JLabel getPanDon() {
 		@Override
 		public void run() {
 
-			for(int i = 1; i <= 4; i++) {
+			for(userI = 1; userI <= 4; userI++) {
 				criticalData.myTurn(MiniPoker.this);
 				
-				if(i == 1) {
+				if(userI == 1) {
 					
 					for(int ii = 0; ii < 2; ii++) {
 						random = (int) (Math.random() * 19);
@@ -874,7 +976,7 @@ public JLabel getPanDon() {
 						players[0].cards[ii] = cards[ii];
 					}
 					
-					ud.deck(i, MiniPoker.this);
+					ud.deck(userI, MiniPoker.this);
 					
 					if("포카드".equals(myresult().substring(1, 4))) {
 						
@@ -898,9 +1000,9 @@ public JLabel getPanDon() {
 						
 					}
 					
-				} else if (i == 2) {
+				} else if (userI == 2) {
 					
-					for(int ii = i; ii < i+1; ii++) {
+					for(int ii = userI; ii < userI+1; ii++) {
 						random = (int) (Math.random() * 19);
 						cards[ii] = random;
 						
@@ -917,7 +1019,7 @@ public JLabel getPanDon() {
 						players[0].cards[ii] = cards[ii];
 					}
 					
-					ud.deck(i,MiniPoker.this);
+					ud.deck(userI,MiniPoker.this);
 
 					if("포카드".equals(myresult().substring(1, 4))) {
 						
@@ -941,9 +1043,9 @@ public JLabel getPanDon() {
 						
 					}
 					
-				} else if (i == 3) {
+				} else if (userI == 3) {
 
-					for(int ii = i; ii < i+1; ii++) {
+					for(int ii = userI; ii < userI+1; ii++) {
 						random = (int) (Math.random() * 19);
 						cards[ii] = random;
 						
@@ -960,7 +1062,7 @@ public JLabel getPanDon() {
 						players[0].cards[ii] = cards[ii];
 					}
 					
-					ud.deck(i, MiniPoker.this);
+					ud.deck(userI, MiniPoker.this);
 
 					if("포카드".equals(myresult().substring(1, 4))) {
 						
@@ -984,9 +1086,9 @@ public JLabel getPanDon() {
 						
 					}
 					
-				} else if (i == 4) {
+				} else if (userI == 4) {
 					
-					for(int ii = i; ii < i+1; ii++) {
+					for(int ii = userI; ii < userI+1; ii++) {
 						random = (int) (Math.random() * 19);
 						cards[ii] = random;
 						
@@ -1003,7 +1105,7 @@ public JLabel getPanDon() {
 						players[0].cards[ii] = cards[ii];
 					}
 					
-					ud.deck(i, MiniPoker.this);
+					ud.deck(userI, MiniPoker.this);
 
 					System.out.println("나의 족보: " + myresult());
 					System.out.println("컴퓨터 족보: " + comresult());
@@ -1053,6 +1155,8 @@ public JLabel getPanDon() {
 						
 					} 
 					
+				} else {
+					 break;
 				}
 				
 				try {
