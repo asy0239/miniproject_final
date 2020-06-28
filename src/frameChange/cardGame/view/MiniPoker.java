@@ -1058,17 +1058,17 @@ public JLabel getPanDon() {
 						jocboState2 = new ImageIcon("images/card/FourCard.png");
 						myJocbo.setIcon(jocboState2);
 						
-					} else if ("트리플".equals(myresult().substring(1, 4))) {
+					} else if ("트리플".equals(myresult().substring(1, 4)) || "트리플".equals(myresult().substring(2, 5))) {
 						
 						jocboState3 = new ImageIcon("images/card/TripleCard.png");
 						myJocbo.setIcon(jocboState3);
 						
-					} else if ("투페어".equals(myresult().substring(1, 4))) {
+					} else if ("투페어".equals(myresult().substring(1, 4)) || "투페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState4 = new ImageIcon("images/card/TwoPareCard.png");
 						myJocbo.setIcon(jocboState4);
 						
-					} else if ("원카드".equals(myresult().substring(1, 4))) {
+					} else if ("원페어".equals(myresult().substring(1, 4)) || "원페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState5 = new ImageIcon("images/card/OnePareCard.png");
 						myJocbo.setIcon(jocboState5);
@@ -1101,17 +1101,17 @@ public JLabel getPanDon() {
 						jocboState2 = new ImageIcon("images/card/FourCard.png");
 						myJocbo.setIcon(jocboState2);
 						
-					} else if ("트리플".equals(myresult().substring(1, 4))) {
+					} else if ("트리플".equals(myresult().substring(1, 4)) || "트리플".equals(myresult().substring(2, 5))) {
 						
 						jocboState3 = new ImageIcon("images/card/TripleCard.png");
 						myJocbo.setIcon(jocboState3);
 						
-					} else if ("투페어".equals(myresult().substring(1, 4))) {
+					} else if ("투페어".equals(myresult().substring(1, 4)) || "투페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState4 = new ImageIcon("images/card/TwoPareCard.png");
 						myJocbo.setIcon(jocboState4);
 						
-					} else if ("원카드".equals(myresult().substring(1, 4))) {
+					} else if ("원페어".equals(myresult().substring(1, 4)) || "원페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState5 = new ImageIcon("images/card/OnePareCard.png");
 						myJocbo.setIcon(jocboState5);
@@ -1144,17 +1144,17 @@ public JLabel getPanDon() {
 						jocboState2 = new ImageIcon("images/card/FourCard.png");
 						myJocbo.setIcon(jocboState2);
 						
-					} else if ("트리플".equals(myresult().substring(1, 4))) {
+					} else if ("트리플".equals(myresult().substring(1, 4)) || "트리플".equals(myresult().substring(2, 5))) {
 						
 						jocboState3 = new ImageIcon("images/card/TripleCard.png");
 						myJocbo.setIcon(jocboState3);
 						
-					} else if ("투페어".equals(myresult().substring(1, 4))) {
+					} else if ("투페어".equals(myresult().substring(1, 4)) || "투페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState4 = new ImageIcon("images/card/TwoPareCard.png");
 						myJocbo.setIcon(jocboState4);
 						
-					} else if ("원카드".equals(myresult().substring(1, 4))) {
+					} else if ("원페어".equals(myresult().substring(1, 4)) || "원페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState5 = new ImageIcon("images/card/OnePareCard.png");
 						myJocbo.setIcon(jocboState5);
@@ -1195,17 +1195,17 @@ public JLabel getPanDon() {
 						jocboState2 = new ImageIcon("images/card/FourCard.png");
 						myJocbo.setIcon(jocboState2);
 						
-					} else if ("트리플".equals(myresult().substring(1, 4))) {
+					} else if ("트리플".equals(myresult().substring(1, 4)) || "트리플".equals(myresult().substring(2, 5))) {
 						
 						jocboState3 = new ImageIcon("images/card/TripleCard.png");
 						myJocbo.setIcon(jocboState3);
 						
-					} else if ("투페어".equals(myresult().substring(1, 4))) {
+					} else if ("투페어".equals(myresult().substring(1, 4)) || "투페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState4 = new ImageIcon("images/card/TwoPareCard.png");
 						myJocbo.setIcon(jocboState4);
 						
-					} else if ("원카드".equals(myresult().substring(1, 4))) {
+					} else if ("원페어".equals(myresult().substring(1, 4)) || "원페어".equals(myresult().substring(2, 5))) {
 						
 						jocboState5 = new ImageIcon("images/card/OnePareCard.png");
 						myJocbo.setIcon(jocboState5);
