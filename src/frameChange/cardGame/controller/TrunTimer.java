@@ -1,4 +1,4 @@
-package frameChange.cardGame.TrunTimer;
+package frameChange.cardGame.controller;
 
 import java.util.Timer;
 import java.util.TimerTask;
