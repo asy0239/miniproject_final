@@ -17,7 +17,7 @@ public class MapManager {
 	private Npc npc;
 	private ProductManager productManager;
 	private final int cntProduct = 10;
-	
+
 	public MapManager() {
 	}
 
@@ -58,7 +58,7 @@ public class MapManager {
 			player.setImgPlayerRight2(player.getImgPlayerRight2().getScaledInstance(50, 50, 0));
 
 			this.npc = new Npc(map, player);
-			
+
 		}
 
 		if (map instanceof Market) {
@@ -66,7 +66,7 @@ public class MapManager {
 			map = (Market) map;
 
 			// 초기 위치 설정
-			player.setX(((Market)map).getUserX());
+			player.setX(((Market) map).getUserX());
 			player.setY(((Market) map).getUserY());
 
 			// 이미지 크기 재설정
@@ -89,7 +89,7 @@ public class MapManager {
 			player.setImgPlayerRight2(player.getImgPlayerRight2().getScaledInstance(100, 100, 0));
 
 			this.productManager = new ProductManager();
-			
+
 		}
 
 		if (map instanceof GameCenter) {
@@ -155,45 +155,44 @@ public class MapManager {
 
 	public void moveNextMap(Maps map, Player player, ChangePanel win) {
 		this.win = win;
-		
+
 		map.saveLocation(player);
-		
+
 		switch (map.mapChange(player.getX(), player.getY())) {
 
 		case "town":
 			map.saveLocation(player);
-			if(map instanceof Market) {
-				showReceipt((Market)map);
+			if (map instanceof Market) {
+				showReceipt((Market) map);
 			}
 			win.change("town", player);
 			break;
 
 		case "market":
-			map.saveLocation(player);
+			((Town)map).saveLocation(player, npc);
 			win.change("market", player);
 			break;
 
 		case "gameCenter":
-			map.saveLocation(player);
+			((Town)map).saveLocation(player, npc);
 			win.change("gameCenter", player);
 			break;
 
 		default:
 			break;
-		} 
+		}
 	}
-	
+
 	// 영수증 출력
 	public void showReceipt(Market map) {
 		// 영수증 다이얼로그 출력
 
-		
-		JOptionPane.showMessageDialog(null, map.totalList() ,"영수증",JOptionPane.QUESTION_MESSAGE);
-		
+		JOptionPane.showMessageDialog(null, map.totalList(), "영수증", JOptionPane.QUESTION_MESSAGE);
+
 	}
-	
+
 	public void resetProductManager() {
 		this.productManager = new ProductManager();
 	}
-	
+
 }

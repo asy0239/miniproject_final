@@ -289,6 +289,7 @@ public class oneTo50 extends JPanel implements ActionListener {
 		ranke6.setText("6 :       " + rankPg.get(5).toString());
 		ranke6.setBounds(50, 450, 550, 100);
 		ranke6.setFont(font);
+		rankPg.clear();
 	
 	}
 
@@ -335,6 +336,7 @@ public class oneTo50 extends JPanel implements ActionListener {
 			reset();                //게임판을 초기화한다
 		}
 		if (e.getSource() == exitBtn) {
+			
 			win.change("gameCenter", player);      //게임센터로 되돌아감
 		}
 		if (e.getSource() == startBtn) {
@@ -409,6 +411,7 @@ public class oneTo50 extends JPanel implements ActionListener {
 				rankPg.add(new ranking(sts[0], Integer.parseInt(sts[1]), Integer.parseInt(sts[2])));	//위에서 선언한 어레이 리스트부분에 값을 담음.
 				// Integer를 인트형으로 변경
 			}
+			br.close();
 			Collections.sort(rankPg);
 			//내림차순으로 소팅한다.
 			

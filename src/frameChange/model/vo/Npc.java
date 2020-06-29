@@ -30,6 +30,7 @@ public class Npc extends JPanel implements Runnable {
 		image = new ImageIcon(path + "character\\downStand.png").getImage().getScaledInstance(50, 50, 0);
 
 		th = new Thread(this);
+		th.start();
 	}
 	
 	public void start() {
@@ -88,7 +89,7 @@ public class Npc extends JPanel implements Runnable {
 		// TODO Auto-generated method stub
 		while (true)
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 				goNpc();
 				System.out.println("npc 쓰레드");
 			} catch (InterruptedException e) {

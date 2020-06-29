@@ -20,7 +20,7 @@ public class Start {
 
 		mf.setSize(1024, 768);
 		mf.startpage = new StartPage(mf);
-
+		mf.setLocationRelativeTo(null);
 		mf.add(mf.startpage);
 
 		music();

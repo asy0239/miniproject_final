@@ -71,10 +71,10 @@ public class MapViewer extends JPanel {
 		doubleBuffered(screenGraphics);
 		g.drawImage(screenImage, 0, 0, null);
 
-		// if (this.map instanceof Town) {
-		// g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
-		// mapManager.getNpc().getY(), null);
-		// }
+		 if (this.map instanceof Town) {
+		 g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
+		 mapManager.getNpc().getY(), null);
+		 }
 
 		if (map instanceof Market) {
 			for (int i = 0; i < mapManager.getProductManager().getCntProduct(); i++) {
@@ -96,10 +96,10 @@ public class MapViewer extends JPanel {
 	public void doubleBuffered(Graphics g) {
 		g.drawImage(mapManager.getPlayer().moveImage(), mapManager.getPlayer().getX(), mapManager.getPlayer().getY(),
 				null);
-		// if (this.map instanceof Town) {
-		// g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
-		// mapManager.getNpc().getY(), null);
-		// }
+		 if (this.map instanceof Town) {
+		 g.drawImage(mapManager.getNpc().getImage(), mapManager.getNpc().getX(),
+		 mapManager.getNpc().getY(), null);
+		 }
 		g.drawImage(map.getImgBackground(), 0, 0, null);
 
 	}
